@@ -1,95 +1,86 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
-export default function Home() {
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import "./page.scss";
+import Link from "next/link";
+import { auth, currentUser, isAuthData, logout } from "@/redux/usersSlice";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import MyCanvas from "../components/Canvas";
+import CursorText from "@/components/AnimatedText";
+import AnimatedText from "@/components/AnimatedText";
+import Popper from "@/components/Popper/Popper";
+
+const Home = () => {
+  const [openSelector, setOpenSelector] = useState(false);
+
+  const user = useAppSelector(currentUser);
+
+  const isAdmin = user.user?.email === "admin";
+
+  const isAuth = useAppSelector(isAuthData);
+
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    dispatch(auth());
+  }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <main className={"main"}>
+      <div className="header">
+        <Link href="/goods">
+          <button className="link goods">Goods</button>
+        </Link>
+        {isAuth && isAdmin ? (
+          <Link href={"/users"}>
+            <button className="link users">Go to users</button>
+          </Link>
+        ) : null}
+        {isAuth ? (
+          <div className="authLink">
+            <button
+              className={`link userMenu ${openSelector ? "open" : ""}`}
+              onClick={() => {
+                setOpenSelector(!openSelector);
+              }}
+            >
+              <div className="userLink">
+                <Image src={"/user.svg"} width={25} height={25} alt="user" />
+                <div className="name">{user.user?.name}</div>
+              </div>
+            </button>
+            {openSelector && (
+              <Popper
+                open={openSelector}
+                onClickOutside={() => setOpenSelector(false)}
+              >
+                <Link href={`/users/${user.user.id}`}>
+                  <div className="menuItem profile">Profile</div>
+                </Link>
+                <button className="menuItem logout" onClick={handleLogout}>
+                  Logout
+                </button>
+              </Popper>
+            )}
+          </div>
+        ) : (
+          <Link href={"/login"}>
+            <button className="link login">Login</button>
+          </Link>
+        )}
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {/* <div className="animation">
+        <MyCanvas />
+      </div> */}
+      {/* <AnimatedText /> */}
+      <MyCanvas />
     </main>
-  )
-}
+  );
+};
+
+export default Home;

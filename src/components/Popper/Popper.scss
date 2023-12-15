@@ -1,0 +1,13 @@
+.menu {
+  position: absolute;
+  right: 20px;
+  top: 75px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+
+  &.open {
+    border: 2px solid #fff;
+    border-radius: 16px;
+  }
+}
