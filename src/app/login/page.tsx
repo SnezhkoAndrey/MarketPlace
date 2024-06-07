@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { login } from "@/redux/usersSlice";
 import Link from "next/link";
 import "./Login.scss";
@@ -10,7 +10,7 @@ import FieldForm from "@/components/FieldForm";
 import Image from "next/image";
 
 const Login = () => {
-  const { push } = useRouter();
+  const { back } = useRouter();
 
   const dispatch = useAppDispatch();
 
@@ -32,7 +32,7 @@ const Login = () => {
         <li></li>
         <li></li>
       </ul>
-      <Link href={"/"} className="linkContainer">
+      <Link href={"/"}>
         <button className="linkBack">
           <Image src={"/arrow-left.svg"} width={20} height={20} alt="user" />
           <div className="linkBackTitle">Go to main</div>
@@ -46,7 +46,7 @@ const Login = () => {
         // validationSchema={SigninSchema}
         onSubmit={(values, { resetForm }) => {
           dispatch(login({ ...values }));
-          push("/");
+          back();
           resetForm({
             values: {
               email: "",

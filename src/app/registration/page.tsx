@@ -7,7 +7,6 @@ import "./Registration.scss";
 import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
 import FieldForm from "@/components/FieldForm";
-import SquareBackgroundAnimation from "@/components/SquareBackgroundAnimation";
 import Image from "next/image";
 
 const Registration = () => {

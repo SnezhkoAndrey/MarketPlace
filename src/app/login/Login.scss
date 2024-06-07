@@ -6,7 +6,7 @@
   min-width: 350px;
   max-width: 500px;
   gap: 40px;
-  margin: 70px auto;
+  margin: 60px auto;
   padding: 30px 50px;
   border-radius: 10px;
   border: 2px solid #fff;
@@ -48,30 +48,29 @@
   }
 }
 
-.linkContainer {
-  .linkBack {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 20px;
-    padding: 10px 15px 10px 10px;
-    background: transparent;
-    backdrop-filter: blur(20px);
-    color: #e9fbf9;
-    border: 2px solid hsla(0, 0%, 0%, 0);
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s cubic-bezier(0.39, 0.575, 0.565, 1),
-      border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.linkBack {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 20px;
+  padding: 10px 15px 10px 10px;
+  height: 50px;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  color: #e9fbf9;
+  border: 2px solid hsla(0, 0%, 0%, 0);
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.39, 0.575, 0.565, 1),
+    border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    .linkBackTitle {
-      font-weight: 400;
-    }
+  .linkBackTitle {
+    font-weight: 400;
+  }
 
-    &:hover {
-      border-color: #fff;
-    }
+  &:hover {
+    border-color: #fff;
   }
 }
 

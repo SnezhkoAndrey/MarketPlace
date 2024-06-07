@@ -10,6 +10,7 @@ import MyCanvas from "../components/Canvas";
 import CursorText from "@/components/AnimatedText";
 import AnimatedText from "@/components/AnimatedText";
 import Popper from "@/components/Popper/Popper";
+import UserLoginSelector from "@/components/UserLoginSelector";
 
 const Home = () => {
   const [openSelector, setOpenSelector] = useState(false);
@@ -41,43 +42,8 @@ const Home = () => {
             <button className="link users">Go to users</button>
           </Link>
         ) : null}
-        {isAuth ? (
-          <div className="authLink">
-            <button
-              className={`link userMenu ${openSelector ? "open" : ""}`}
-              onClick={() => {
-                setOpenSelector(!openSelector);
-              }}
-            >
-              <div className="userLink">
-                <Image src={"/user.svg"} width={25} height={25} alt="user" />
-                <div className="name">{user.user?.name}</div>
-              </div>
-            </button>
-            {openSelector && (
-              <Popper
-                open={openSelector}
-                onClickOutside={() => setOpenSelector(false)}
-              >
-                <Link href={`/users/${user.user.id}`}>
-                  <div className="menuItem profile">Profile</div>
-                </Link>
-                <button className="menuItem logout" onClick={handleLogout}>
-                  Logout
-                </button>
-              </Popper>
-            )}
-          </div>
-        ) : (
-          <Link href={"/login"}>
-            <button className="link login">Login</button>
-          </Link>
-        )}
+        <UserLoginSelector />
       </div>
-      {/* <div className="animation">
-        <MyCanvas />
-      </div> */}
-      {/* <AnimatedText /> */}
       <MyCanvas />
     </main>
   );
